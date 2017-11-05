@@ -1,0 +1,55 @@
+
+body {
+	font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
+}
+
+#wrapper {
+	width: 100%;
+	min-width: 1000px;
+}
+
+#header {
+	height: 90px;
+	border-bottom:1px solid #000000;
+}
+
+#middle {
+	border-left: 250px solid #FFFFFF;
+	height: 1%;
+	position: relative;
+}
+
+#middle:after {
+	content: '';
+	clear: both;
+	display: table;
+}
+
+#container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+	margin-right: -100%;
+}
+
+#content {
+	padding: 20px;
+	border-left: 1px solid #000000;
+}
+
+#sidebar {
+	padding: 20px;
+	float: left;
+	width: 210px;
+	position: relative;
+	left: -250px;
+}
+
+#logo {
+	float: left;
+}
+
+#tabs {
+	float: right;
+	text-align: right;
+}

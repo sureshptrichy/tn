@@ -1,0 +1,6 @@
+- Do we know the department managers?
+- Should compiled review form sections drag and drop position?
+- Can a sub evaluation rating field have zero stars or one minimum?
+- Are compiled review forms corporate and can be used over and over by different properties?
+
+

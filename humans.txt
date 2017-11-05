@@ -1,0 +1,15 @@
+/* TEAM */
+    Company: Globi Web Solutions
+    Company URL: http://globi.ca/
+	Code Nerd: Russ Porosky
+	Code Nerd URL: http://indyarmy.com/
+	Site: http://tn2.dev.globi.ca/
+	Location: Calgary, Alberta
+
+/* LIBS */
+	HTML5 Boilerplate
+	Modernizr
+
+/* SITE */
+	Doctype: HTML5
+	Language: English

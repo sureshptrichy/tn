@@ -1,0 +1,170 @@
+html * {
+	font-size: inherit;
+	color: inherit;
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	font-size:12px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	overflow:visible;
+}
+@page { size:8.5in 11in; margin: 1cm }
+header,
+#main-nav-wrapper,
+#side-nav,
+.sr-only,
+button,
+.nav,
+.affixfadein,
+#footer,
+#modalDelete,
+#modalComplete,
+.btn,
+.table-action,
+input,
+.modal-dialog {
+	display: none;
+	height: 0;
+	width: 0;
+}
+.text-answer {
+	margin:20px 0;
+}
+blockquote {
+	border:none;
+	border-left:3px #aaa solid;
+	padding:20px;
+}
+.text-answer strong {
+	font-weight: bold;
+}
+form{	
+	page-break-after:avoid;
+}
+html, body {
+	height: auto;
+}
+header {
+}
+
+.body-content {
+}
+
+h2 {
+	margin:20px 0 0 0;
+	font-size:30px;
+}
+.cummulation label {
+	color: #769AC0;
+	font-weight: bold;
+}
+ul, ol {
+	padding:0 0 0 40px;
+}
+textarea {
+	min-height: 100px;
+	width: 100%;
+}
+.tn-logo {
+	width: 20%;
+}
+.tn-banner {
+	width: 79%;
+}
+.form-section{
+	page-break-inside:avoid;
+	page-break-after:avoid;
+	clear:both;
+}
+.form-section .section-header {
+	page-break-inside:avoid;	
+}
+.reviewform-info {
+	width: 50%;
+	float: left;
+	margin:20px 0;
+}
+
+.section-header div {
+	vertical-align: middle !important;
+}
+.section-header div strong{
+	font-weight: bolder;
+}
+.section-description {
+	clear:left;
+	width: 85%;
+}
+.full-size .section-description {
+	width: 100%;
+}
+.rating-stars {
+	overflow: hidden;
+}
+.rating-stars p{
+	margin:0;
+	padding:0;
+}
+.rating-stars div{
+	height: 25px;
+}
+.stars {
+	direction: rtl;
+	position: relative;
+	clear: both;
+}
+.stars label, .stars input{
+	margin:0;
+	padding:0;
+}
+.stars input {
+	visibility: hidden;
+	position: absolute;
+}
+.stars label {
+	float: right;
+	margin:0;
+	padding:0;
+}
+.stars:not(:checked) > label {
+    width:0.9em;
+    padding:0;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:150%;
+    color:#ddd !important;
+}
+.stars:not(:checked) > label:before {
+    content: '\2606';
+}
+
+.stars > input:checked ~ label {
+    color: #428BCA !important;
+}
+.stars > input:checked ~ label:before {
+    content: '\2605';
+}
+
+.stars:not(:checked) > label:hover,
+.stars:not(:checked) > label:hover ~ label {
+    color: #428BCA;
+}
+
+.stars > input:checked + label:hover,
+.stars > input:checked + label:hover ~ label,
+.stars > input:checked ~ label:hover,
+.stars > input:checked ~ label:hover ~ label,
+.stars > label:hover ~ input:checked ~ label {
+    color: #428BCA;
+    border:1px #c00 solid;
+}
+.rating-avg label{
+    width:2em !important;
+    padding:0;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:150%;
+    color: #428BCA !important;
+}

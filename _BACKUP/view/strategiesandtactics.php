@@ -1,0 +1,1 @@
+<p>Strategies & Tactics Content</p>

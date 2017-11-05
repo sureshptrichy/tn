@@ -1,0 +1,75 @@
+@media print {
+@page {
+size:landscape
+}
+}
+html * { font-size: inherit; color: inherit; margin: 0; padding: 0; font-weight: normal; font-size: 10px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; overflow: visible; width: inherit; height: inherit }
+#side-nav, .navbar-brand, .sr-only, .btn, button, h1, .nav, .affixfadein, #footer, #modalDelete, #modalComplete, #modalStrategyAddForm, #modalSubmit, #modalReopen, .btn, .table-action { display: none!important }
+.navbar-header { width: auto }
+.header-quotes { position: absolute; right: 0; top: 0 }
+.header-quotes br { display: none }
+.affixfadeout { display: inline-block }
+.printhide { display: none }
+html, body { height: auto }
+header { margin: 0 0 20px 0; font-size: 10px }
+.visible-print { position: relative; height: 100px; clip: rect(10px,100px,50px,10px) }
+.tn-logo { position: absolute; left: 0 }
+.tn-banner { position: absolute; right: 0; display: none }
+a[href]:after { display: none }
+.panel { margin: 10px 0 }
+#wrap { max-width: 100%!important }
+.panel-heading { margin: 10px 0 }
+.panel-title .label { display: none }
+.panel-title { text-align: left }
+.panel-title .accordion-toggle { float: none; position: relative }
+.panel-title a { font-size: 2em; clear: both; width: 100%; background: #dce6f1; margin-bottom: .5em }
+.panel-body { }
+.panel-body .row { }
+.panel-body .row * { width: inherit }
+.main-description p { font-weight: bold!important }
+.strategytactic-header { width: 100% }
+.strategytactic-header div { width: 49%!important; display: inline-block }
+.tactic-due-date h5 { padding-left: 30px }
+.strategytactic { display: block }
+.strategy { display: inline-block; width: 40%!important }
+.strategy * { width: 100%!important; padding: 1px }
+.strategy .col-sm-1 { width: 10%!important; display: inline-block; vertical-align: top }
+.strategy .col-md-10 { width: 87%!important; display: inline-block }
+.strategy i.fa { width: 5%!important }
+.tactics { display: inline-block; vertical-align: top; width: 50%!important }
+.tactic { display: inline-block!important; clear: both!important; width: 100%!important }
+.tactic .tactic-info { width: 61%!important }
+.tactic .completed { display: none!important }
+.tactic * { padding: 3px; width: 100%!important }
+.tactic div { float: left!important; display: inline-block!important }
+.tactic div * { width: 100%!important }
+.tactic .main-description, .tactic .main-comment { width: 100%!important }
+.tactic .main-comment p i.fa { width: auto!important }
+.tactic .table-action { display: none!important }
+.tactic .date-completed { float: right!important; width: 30%!important }
+.date-completed p { clear: both!important }
+.read-more-toggle { display: none }
+.strategy, .tactics { min-height: inherit!important }
+.read-more-content { display: block!important }
+.main-comment p { margin-left: 0; margin-bottom: 0 }
+.visible-print .tn-page-title { text-align: center; display: block!important }
+.form-subeval-heading{ margin-top:30px; text-align:center; font-size: 30px; margin-bottom:20px;}
+.reviewform-info{ float:left; width:33.33%; margin-bottom:10px;}
+.reviewform-info p{ margin-bottom:5px;}
+.form-section:after, .reviewform-info:after{ content:''; display:table; height:0; clear:both;}
+.form-group{ clear:both;}
+.section-header{ font-size:13px!important; padding-bottom:15px!important; font-weight:bold!important; margin-bottom:10px!important;}
+.section-header strong{ font-weight:bold!important; font-size:13px!important;}
+.pull-left{ float:left;}
+.pull-right{ float:right;}
+.rating-stars{text-align:right; margin-right:30px;}
+.rating-stars p { float:left!important; margin-right: 10px; display:inline-block!important;}
+.rating-stars .stars {float:right!important; display:inline-block!important;}
+.body-content{ width:100%!important;}
+.form-section{ padding-bottom:5px;}
+.section-description li{ padding-bottom:5px;}
+.col-md-3{ float:left; width:25%; }
+.col-md-1{float:left; width:8.33333333%; }
+#modalRatingContent{ display:none;}
+h2 { margin-bottom:5px; padding-bottom:5px; padding-top:5px;}
+h2 label{ font-size:18px; font-weight:bold;}

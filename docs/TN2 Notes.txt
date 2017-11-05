@@ -1,0 +1,31 @@
+- Property - Division - Department - Competency
+- Treat competencies like tags
+
+
+- User to property and dept
+- Property logo to properties table
+- Add deleted flag on all records
+
+- DocTemplates for Standard, Property, Dept, User
+
+- Ability to add Ad-Hoc peer reviewers
+
+
+Properties, Divisions, Depts
+- When a propery is created it will automatically inherit all standard divisions and departments
+- The property can then delete and divisions and departments that are not relevant to them
+- The property can create their own custom divisions and departments
+
+
+Review Content Types
+- Static Content
+- Results Culture Matrix
+- Sub Evaluations (Rating or Textbox)
+
+
+
+Coding
+- Security
+- Settings
+- Annual Strat Plan
+- Strat & Tactics

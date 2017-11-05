@@ -1,0 +1,35 @@
+New User:
+- assigned to Property if created by SuperUser or Administration
+- assigned to Property and Division if created by Division Manager
+- assigned to Property, Division and Department if created by Department Manager
+
+
+
+The Filters (sidebar) affect the S&T, ASP and Calendar pages:
+- Administration (Property Manager) can see only their Property, but can use filters to see Divisions and Departments.
+- Division Manager can see only their Property and Division, but can view all Departments.
+- Department Manager (and below) can see only their Property, Division and Department.
+
+Date Filters refer only to the Objective, Strategy or Tactic Start or Due date.
+- except on the Calendar where Objectives are ignored
+- on S&T and ASP pages, the Start and Due dates are seen as ranges and will appear if the current month/year is between them
+
+
+
+When assigning a User to a Strategy, the user list is generated as:
+- all users if current user is SuperUser
+- all users belonging to the current Property if current user is Administration (Property Manager)
+- all users belonging to the current Property and Division if current user is Division Manager
+- all users belonging to the current Property, Division and Department if current user is Department Manager
+- other users cannot create Strategies
+
+
+
+When creating an Objective (ASP page) OR a Strategy without an Objective (S&T page):
+- assigned to Property if user is Administration or SuperUser
+- assigned to Division if user is Division Manager
+- assigned to Department if user is Department Manager
+- other users cannot create Objectives or Strategies without an Objective
+
+A Strategy on the ASP page is always owned by an Objective and assigned to a User.
+Objectives and Strategies always belong to a Competency.
