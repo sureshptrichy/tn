@@ -41,7 +41,12 @@ final class Controller_Performancereviews extends Controller {
 		$matrixes = array();
 		$ratings = array();
 		
-		$getForms = get_model('Reviewcycle')->currentForms($userId);
+		$selfReviewForms = get_model('Reviewcycle')->selfReviewForms($userId);
+		$managerReviewForms = get_model('Reviewcycle')->managerReviewForms($userId);
+		
+		//print_r($selfReviewForms);exit;
+		
+/* 		$getForms = get_model('Reviewcycle')->currentForms($userId);
 		foreach($getForms as $item => $form){
 			$targetUser = get_model('user');
 			$userType = $this->G->ids->type($form['user_for_id']);
@@ -169,9 +174,9 @@ final class Controller_Performancereviews extends Controller {
 		$myself->loaduser(session('user'));
 		if ($myself->acl->role['level'] != '20' && ($myself->acl->role['level'] > 2)){
 			tpl_set('matrixes', $matrixes);
-		}
-		tpl_set('myForms', $myForms);
-		tpl_set('userReviewForms', $userReviewForms);
+		} */
+		tpl_set('selfReviewForms', $selfReviewForms);
+		tpl_set('managerReviewForms', $managerReviewForms);
 		parent::display();
 	}
 

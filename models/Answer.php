@@ -117,13 +117,14 @@ CREATETABLE;
 		$this->execute($sql);
 	}
 
-	public function createRecord($propertyId, $divisionId, $departmentId, $reviewcycleId/* , $compiledformId, $subevaluationId, $fieldId */, $userForId, $userById) {
+	public function createRecord($propertyId, $divisionId, $departmentId, $reviewcycleId, $compiledformId, $userForId, $userById) {
 		$sql = <<<ADDRECORD
 INSERT INTO `#__{$this->cycleName}` (
 	`property_id`,
 	`division_id`,
 	`department_id`,
 	`reviewcycle_id`,
+	`compiledform_id`,
 	`user_for_id`,
 	`user_by_id`
 ) VALUES (
@@ -131,6 +132,7 @@ INSERT INTO `#__{$this->cycleName}` (
 	'$divisionId',
 	'$departmentId',
 	'$reviewcycleId',
+	'$compiledformId',
 	'$userForId',
 	'$userById'
 );

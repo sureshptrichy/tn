@@ -873,10 +873,8 @@ final class Controller_Settings_Reviewcycles extends Controller {
 												$answers[$aCount]['property_id'] = session('property');
 												$answers[$aCount]['division_id'] = $division;
 												$answers[$aCount]['department_id'] = $department;
-												$answers[$aCount]['reviewcycle_id'] = 'RC_' . $id;
-												//$answers[$aCount]['compiledform_id'] = $fId;
-												//$answers[$aCount]['subevalutaion_id'] = $sId;
-												//$answers[$aCount]['field_id'] = $fieldId;
+												$answers[$aCount]['reviewcycle_id'] = $id;
+												$answers[$aCount]['compiledform_id'] = $fId;
 												$answers[$aCount]['user_by_id'] = $userById;
 												$answers[$aCount]['user_for_id'] = $userForId;
 												$answers[$aCount]['username'] = $username;
@@ -961,9 +959,7 @@ final class Controller_Settings_Reviewcycles extends Controller {
 					$answers[$i]['division_id'],
 					$answers[$i]['department_id'],
 					$answers[$i]['reviewcycle_id'],
-/* 					$answers[$i]['compiledform_id'],
-					$answers[$i]['subevalutaion_id'],
-					$answers[$i]['field_id'], */
+					$answers[$i]['compiledform_id'],
 					$answers[$i]['user_for_id'],
 					$answers[$i]['user_by_id']
 				);
