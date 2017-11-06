@@ -14,7 +14,7 @@
 		?>
 	<tr>
 		<td><?php echo $myForm['review_name']; ?></td>
-		<td><?php if ($myForm['answer_date'] > 0){?><i class="fa fa-check"></i><?php }?></td>
+		<td><?php if ($myForm['answer_date'] > 0){ ?><i class="fa fa-check"></i><?php } else { ?> Not Submitted Yet for manager review<?php } ?></td>
 		<td><a href="<?php echo $currentUrl; ?>selfreview/<?php echo $myForm['review_id'];?>">View</a></td>
 	</tr>
 <?php }?>
@@ -35,7 +35,7 @@
 	<tr>
 		<td><?php echo $userForm['review_for']; ?></td>
 		<td><?php echo $userForm['review_name']; ?></td>
-		<td><?php if ($userForm['answer_date'] > 0){?><i class="fa fa-check"></i><?php }?></td>
+		<td><?php if ($userForm['manager_answer_date'] > 0){?><i class="fa fa-check"></i><?php } else { ?> Not Reviewed Yet.<?php } ?></td>
 		<td><a href="<?php echo $currentUrl; ?>mgrreview/<?php echo $userForm['review_id'];?>">View</a></td>
 	</tr>
 <?php }?>

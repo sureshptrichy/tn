@@ -93,7 +93,7 @@ final class Model_Reviewcycle extends Model {
 		$reviewCycle = array();
 		$incomplete = null;
 
-		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.compiledform_id, b.answer, b.answer_date FROM #__reviewcycle AS a LEFT JOIN #__reviewcycle_answers AS b  ON (a.id = b.reviewcycle_id) WHERE b.user_by_id = '$userId' AND b.user_for_id = '$userId' GROUP BY a.id ORDER BY a.start DESC";
+		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.compiledform_id, b.answer, b.answer_date FROM #__reviewcycle AS a LEFT JOIN #__reviewcycle_answers AS b  ON (a.id = b.reviewcycle_id) WHERE b.user_for_id = '$userId' AND b.manager_answer_date = 0 GROUP BY a.id ORDER BY a.start DESC";
 		
 		$results = $this->execute($sql);
 		
@@ -106,12 +106,12 @@ final class Model_Reviewcycle extends Model {
 		$reviewCycle = array();
 		$incomplete = null;
 
-		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.compiledform_id, b.answer, b.answer_date, 
+		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.compiledform_id, b.answer, b.manager_answer_date, 
 				CONCAT(c.firstname, ' ', c.lastname) AS review_for 
 				FROM #__reviewcycle AS a 
 				LEFT JOIN #__reviewcycle_answers AS b  ON (a.id = b.reviewcycle_id)
 				LEFT JOIN #__user AS c ON (b.user_for_id = c.id)
-				WHERE b.user_by_id = '$userId' AND b.user_for_id != '$userId' GROUP BY a.id ORDER BY a.start DESC";
+				WHERE b.user_by_id = '$userId'  AND b.answer_date > 0 GROUP BY a.id ORDER BY a.start DESC";
 		
 		$results = $this->execute($sql);
 		
