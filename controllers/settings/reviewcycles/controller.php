@@ -632,6 +632,8 @@ final class Controller_Settings_Reviewcycles extends Controller {
 		if (array_key_exists('associateManagers', $review['setup'])) {
 			$associateManagers = $review['setup']['associateManagers'];
 		}
+		
+		//print_r($managerAssignments);exit;
 
 		// Load all users.
 		$this->write('<h3>Loading Users</h3>');
@@ -646,9 +648,11 @@ final class Controller_Settings_Reviewcycles extends Controller {
 
 		$users = array();
 		foreach ($userlist as $uId => $user) {
-			$users[$uId] = get_model('user');
-			$users[$uId]->loadUser($uId);
-			//$this->write("{$users[$uId]->firstname} {$users[$uId]->lastname} - {$users[$uId]->acl->role['name']}<br>");
+			if($user['role_level'] < PROPERTY_MANAGER) {
+				$users[$uId] = get_model('user');
+				$users[$uId]->loadUser($uId);
+				//$this->write("{$users[$uId]->firstname} {$users[$uId]->lastname} - {$users[$uId]->acl->role['name']}<br>");
+			}
 		}
 
 		// Load all used compiled forms.
@@ -829,9 +833,9 @@ final class Controller_Settings_Reviewcycles extends Controller {
 						foreach ($forms as $fId => $form) {
 							if (array_key_exists($fId, $usedSubs)) {
 								foreach ($usedSubs[$fId] as $sId => $sub) {
-									$self = false;
+									$self = true;
 									$peer = false;
-									$manager = false;
+									$manager = true;
 									if ($sub['self'] == 1) {
 										$self = true;
 										//$this->write("{$sub['name']} ($sId) - <strong>SELF</strong><br>");
@@ -847,26 +851,11 @@ final class Controller_Settings_Reviewcycles extends Controller {
 									foreach ($usersReverse as $userById => $userBy) {
 										$addAnswer = false;
 										if ($self && $userById == $userForId) {
-											$addAnswer = true;
+											//$addAnswer = true;
 											$username = $users[$userById]->firstname.' '.$users[$userById]->lastname;
 											//$this->write("{$users[$userForId]->username} &lt;- {$users[$userById]->username} : <strong>SELF</strong> : {$sub['name']} ($sId)<br>", 1);
-										} elseif ($peer && array_key_exists($userById, $peerAssignments) && in_array($userForId, $peerAssignments[$userById])) {
-											$addAnswer = true;
-											$username = $users[$userById]->firstname.' '.$users[$userById]->lastname;
-											//$this->write("{$users[$userForId]->username} &lt;- {$users[$userById]->username} : <strong>PEER</strong> : {$sub['name']} ($sId)<br>", 1);
-										} elseif ($peer && array_key_exists($userForId, $peerEmailAssignments)) {
-											foreach ($peers as $pid => $peerEmail) {
-												if (in_array($peerEmail->email, $peerEmailAssignments[$userForId])) {
-													$addAnswer = true;
-													$username = $peerEmail->email;
-													$userById = $pid;
-													//$this->write("{$users[$userForId]->username} &lt;- {$peerEmail->email} : <strong>PEER EMAIL</strong> : {$sub['name']} ($sId)<br>", 1);
-												}
-											}
 										} elseif ($manager && array_key_exists($userById, $managerAssignments) && in_array($userForId, $managerAssignments[$userById])) {
 											$addAnswer = true;
-											$username = $users[$userById]->firstname.' '.$users[$userById]->lastname;
-											//$this->write("{$users[$userForId]->username} &lt;- {$users[$userById]->username} : <strong>MANAGER</strong> : {$sub['name']} ($sId)<br>", 1);
 										}
 										if (true === $addAnswer) {
 											//foreach ($usedFields[$sId] as $fieldId => $field) {
@@ -877,7 +866,7 @@ final class Controller_Settings_Reviewcycles extends Controller {
 												$answers[$aCount]['compiledform_id'] = $fId;
 												$answers[$aCount]['user_by_id'] = $userById;
 												$answers[$aCount]['user_for_id'] = $userForId;
-												$answers[$aCount]['username'] = $username;
+												//$answers[$aCount]['username'] = $username;
 												//$this->write("<pre>$aCount ".print_r($answers[$aCount], true).'</pre>');
 												$aCount++;
 											//}
@@ -970,13 +959,13 @@ final class Controller_Settings_Reviewcycles extends Controller {
 
 		// Lock all used Forms, Subevaluation and Fields.
 		//$this->write('<h3>Updating FSF Records</h3>');
-		$this->write('<h3>Locking Leadership Review...</h3> ');
+		/* $this->write('<h3>Locking Leadership Review...</h3> ');
 		$review['setup'] = json_encode($review['setup']);
 		$review['start'] = time();
 		$review['locked'] = 1;
 		$reviewModel->setAll($review, true);
-		$reviewModel->save();
-		$this->write('Locked<br>');
+		$reviewModel->save(); 
+		$this->write('Locked<br>');*/
 
 		/* $this->write('Locking Compiled Forms in use...');
 		foreach ($usedFormList as $rId) {
@@ -1324,7 +1313,7 @@ EMAILBODY;
 			'value' => "<h2>Select Supervisor for each user (Defaults to the assigned Supervisor)</h2>"
 		));
 		foreach ($users as $aid => $user) {
-			if (array_key_exists($aid, $preload)) {
+			if (array_key_exists($aid, $preload) && $user['role_level'] < PROPERTY_MANAGER) {
 				$form->addSelect(array(
 					'name' => $aid,
 					'class' => 'form-control',
