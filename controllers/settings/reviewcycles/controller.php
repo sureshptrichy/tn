@@ -388,6 +388,8 @@ final class Controller_Settings_Reviewcycles extends Controller {
 					tpl_set('form', $form);
 				} else {
 					$managerList = $form->valid();
+					//print_r($managerList);
+					
 					$setup = json_decode($preload['setup'], true);
 					$setup['managers'] = array();
 					foreach ($managerList as $aid => $mid) {
@@ -397,7 +399,9 @@ final class Controller_Settings_Reviewcycles extends Controller {
 							}
 							$setup['managers'][$mid][] = $aid;
 						}
+						//$setup['managers'][$mid][] = $aid;
 					}
+					//print_r($setup['managers']);exit;
 					$setup = json_encode($setup);
 					$preload['setup'] = $setup;
 
@@ -848,13 +852,11 @@ final class Controller_Settings_Reviewcycles extends Controller {
 										$manager = true;
 										//$this->write("{$sub['name']} ($sId) - <strong>MANAGER</strong><br>");
 									}
+									
+									//print_r($usersReverse);exit;
 									foreach ($usersReverse as $userById => $userBy) {
 										$addAnswer = false;
-										if ($self && $userById == $userForId) {
-											//$addAnswer = true;
-											$username = $users[$userById]->firstname.' '.$users[$userById]->lastname;
-											//$this->write("{$users[$userForId]->username} &lt;- {$users[$userById]->username} : <strong>SELF</strong> : {$sub['name']} ($sId)<br>", 1);
-										} elseif ($manager && array_key_exists($userById, $managerAssignments) && in_array($userForId, $managerAssignments[$userById])) {
+										if (array_key_exists($userById, $managerAssignments) && in_array($userForId, $managerAssignments[$userById])) {
 											$addAnswer = true;
 										}
 										if (true === $addAnswer) {
