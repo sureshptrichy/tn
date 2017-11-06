@@ -136,7 +136,7 @@ final class Controller_Settings_Subevaluations extends Controller {
 		} elseif ($preload['self'] != 1 && $preload['manager'] == 1){
 			$preload['assignment'] = 'manager';
 		} else {
-			$preload['assignment'] = 'peer';
+			$preload['assignment'] = 'self';
 		}
 		$subevalForm = $this->build_subeval_form('edit', $preload);
 		if (FALSE === $subevalForm->valid()) { 
@@ -310,14 +310,19 @@ final class Controller_Settings_Subevaluations extends Controller {
 			$assignments = array(
 				'self' => _('Self/Manager'),
 				'manager' => _('Manager'),
-				'peer' => _('Peer')
+				//'peer' => _('Peer')
 			);
 		}
+		$assignments = array(
+				'self' => _('Self/Manager'),
+				'manager' => _('Manager'),
+				//'peer' => _('Peer')
+			);
 		$form->addRadio(array(
 			'required' => true,
 			'name' => 'assignment',
 			'value' => $assignments,
-			'default' => 'peer',
+			'default' => 'self',
 			'class' => 'radio',
 			'label' => _('Cummulation')
 		));
