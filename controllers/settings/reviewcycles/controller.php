@@ -872,6 +872,36 @@ final class Controller_Settings_Reviewcycles extends Controller {
 												//$this->write("<pre>$aCount ".print_r($answers[$aCount], true).'</pre>');
 												$aCount++;
 											//}
+											$reviewLink = HOST . URL . 'performancereviews';								
+											$subject = 'You have been asked to do a Self Review';
+											$body = '
+												<html>
+													<head>
+														<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+														<title>Self Review Request</title>
+													</head>
+													<body>
+														<p>You have been asked to perform a Self Review.</p>
+														
+														<p>You can fill in reviews by visiting the True North website at<br>
+															&nbsp;&nbsp;&nbsp;&nbsp;<a href="'.$reviewLink.'">'.$reviewLink.'</a>
+														</p>
+													</body>
+												</html>';
+											$headers = array(
+												'MIME-Version: 1.0',
+												'Content-type: text/html; charset=utf-8',
+												'Date: ' . date('r', $_SERVER['REQUEST_TIME']),
+												'Message-ID: <' . $_SERVER['REQUEST_TIME'] . md5($_SERVER['REQUEST_TIME']) . '@' . $_SERVER['SERVER_NAME'] . '>',
+												'From: ' . mb_encode_mimeheader('True North') . ' <tn@tn2.com>',
+												'Reply-To: ' . mb_encode_mimeheader('True North') . ' <tn@tn2.com>',
+												'Return-Path: ' . mb_encode_mimeheader('True North') . ' <tn@tn2.com>',
+												'X-Mailer: PHP/' . phpversion(),
+												'X-Originating-IP: ' . $_SERVER['SERVER_ADDR']
+											);
+											
+
+											mail($userFor->username, $subject, $body, implode("\r\n", $headers));											
 										}
 									}
 								}
