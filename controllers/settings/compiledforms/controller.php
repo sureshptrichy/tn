@@ -384,8 +384,8 @@ final class Controller_Settings_Compiledforms extends Controller {
 			'name' => 'compiledform',
 			'class' => 'form compiled-form',
 			'header' => array(
-				//'text' => sprintf(_($preload['name']), ucfirst($type)),
-				'text' => 'PERFORMANCE MANAGEMENT',
+				'text' => sprintf(_($preload['name']), ucfirst($type)),
+				//'text' => 'PERFORMANCE MANAGEMENT',
 				'class' => 'form-subeval-heading'
 			)
 		), $preload);
