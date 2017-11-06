@@ -1,8 +1,9 @@
 <?php defined('SYSTEM_PATH') OR die(_('No direct access to this file is allowed.')); ?>
 
+<?php if(count($selfReviewForms) > 0) { ?>
 <table class="table table-striped table-hover performance-reviews">
 	<tr>
-		<th colspan="3"><h3>Self Review</h3></th>
+		<th colspan="3"><h3>Self Reviews</h3></th>
 	</tr>
 	<tr>
 		<th>Review Form</th>
@@ -19,10 +20,13 @@
 	</tr>
 <?php }?>
 </table>
-
+<?php } else { ?>
+<h4>You don't have any review forms now to do a self review.</h4>
+<?php } ?>
+<?php if(count($managerReviewForms) > 0) { ?>
 <table class="table table-striped table-hover performance-reviews">
 	<tr>
-		<th colspan="4"><h3>Manager Review</h3></th>
+		<th colspan="4"><h3>Manager Reviews</h3></th>
 	</tr>
 	<tr>
 		<th>User</th>
@@ -40,3 +44,4 @@
 	</tr>
 <?php }?>
 </table>
+<?php } ?>

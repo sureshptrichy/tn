@@ -583,7 +583,7 @@ final class Controller_Performancereviews extends Controller {
 						if(array_key_exists($field_id, $sectionAnswer)) {
 							$subevaluation['fields'][$field['id']]['answer'] = $sectionAnswer[$field['id']];
 						}
-						if(array_key_exists($field_id, $managerAnswer)) {
+						if(is_array($managerAnswer) && array_key_exists($field_id, $managerAnswer)) {
 							$subevaluation['fields'][$field['id']]['value'] = $managerAnswer[$field['id']];
 						}
 					}
