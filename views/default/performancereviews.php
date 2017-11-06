@@ -7,14 +7,15 @@
 	<tr>
 		<th>Review Form</th>
 		<th>Completed</th>
+		<th>Action</th>
 	</tr>
 <?php 
 	foreach($selfReviewForms as $myForm){
 		?>
 	<tr>
 		<td><?php echo $myForm['review_name']; ?></td>
-		<td><a href="<?php echo $currentUrl; ?>review/<?php echo $myForm['reviewcycle_id'];?>/<?php echo $myForm['compiledform_id'];?>/<?php echo $myForm['review_id'];?>">View</a></td>
 		<td><?php if ($myForm['answer_date'] > 0){?><i class="fa fa-check"></i><?php }?></td>
+		<td><a href="<?php echo $currentUrl; ?>selfreview/<?php echo $myForm['review_id'];?>">View</a></td>
 	</tr>
 <?php }?>
 </table>
@@ -26,16 +27,16 @@
 	<tr>
 		<th>User</th>
 		<th>Review Form</th>
-		<th>View</th>
 		<th>Completed</th>
+		<th>Action</th>
 	</tr>
 <?php 
 	foreach($managerReviewForms as $userForm){?>
 	<tr>
 		<td><?php echo $userForm['review_for']; ?></td>
 		<td><?php echo $userForm['review_name']; ?></td>
-		<td><a href="<?php echo $currentUrl; ?>review/<?php echo $userForm['reviewcycle_id'];?>/<?php echo $userForm['compiledform_id'];?>/<?php echo $userForm['review_id'];?>">View</a></td>
 		<td><?php if ($userForm['answer_date'] > 0){?><i class="fa fa-check"></i><?php }?></td>
+		<td><a href="<?php echo $currentUrl; ?>review/<?php echo $userForm['reviewcycle_id'];?>/<?php echo $userForm['compiledform_id'];?>/<?php echo $userForm['review_id'];?>">View</a></td>
 	</tr>
 <?php }?>
 </table>

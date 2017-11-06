@@ -450,6 +450,11 @@ final class Controller_Settings_Compiledforms extends Controller {
 			'seniority_date' => '',
 			'hourly_department' => '',
 			'hourly_division' => '',
+			'target_user' => $targetUser,
+			'property' => $propertyName,
+			'review_cycle' => '2014',
+			'manager' => $manager,
+			'department' => $departmentName
 		));		
 		
 		$form->addHiddenArray(array(

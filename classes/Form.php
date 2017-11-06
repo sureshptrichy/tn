@@ -525,27 +525,52 @@ class Form extends Object {
 					$return .= '</'.$field['tag'].'>';
 					break;
 				case 'reviewFormInfo':
-					$return .= '<div class="container-fluid clearfix">';
-						$return .= '<div class="col-md-4 reviewform-info">';
-							$return .= '<p>Name: '.$field['hourly_name'].'</p>';
-							$return .= '<p>Position: '.$field['hourly_position'].'</p>';
-							$return .= '<p>Department: '.$field['hourly_department'].'</p>';
-							$return .= '<p>Division: '.$field['hourly_division'].'</p>';
-							$return .= '<p>Property: '.$field['property_name'].'</p>';
+					if(isset($field['hourly_name']) && $field['hourly_name'] != "") {
+						$return .= '<div class="container-fluid clearfix">';
+							$return .= '<div class="col-md-4 reviewform-info">';
+								$return .= '<p>Name: '.$field['hourly_name'].'</p>';
+								$return .= '<p>Position: '.$field['hourly_position'].'</p>';
+								$return .= '<p>Department: '.$field['hourly_department'].'</p>';
+								$return .= '<p>Division: '.$field['hourly_division'].'</p>';
+								$return .= '<p>Property: '.$field['property_name'].'</p>';
+							$return .= '</div>';
+							$return .= '<div class="col-md-4 reviewform-info">';
+								$return .= '<p>Last Review Date: '.$field['last_review_date'].'</p>';
+								$return .= '<p>Review Cycle: '.$field['review_cycle'].'</p>';
+								$return .= '<p>Manager/Evaluator: '.$field['review_cycle'].'</p>';
+								$return .= '<p>Review Form: '.$field['reviewform_name'].'</p>';
+							$return .= '</div>';
+							$return .= '<div class="col-md-4 reviewform-info">';
+								$return .= '<p>Current Rate: '.$field['current_rate'].'</p>';
+								$return .= '<p>Date of Hire: '.$field['hire_date'].'</p>';
+								$return .= '<p>Date of Current Position: '.$field['position_date'].'</p>';
+								$return .= '<p>Seniority Date: '.$field['seniority_date'].'</p>';
+							$return .= '</div>';
 						$return .= '</div>';
-						$return .= '<div class="col-md-4 reviewform-info">';
-							$return .= '<p>Last Review Date: '.$field['last_review_date'].'</p>';
-							$return .= '<p>Review Cycle: '.$field['review_cycle'].'</p>';
-							$return .= '<p>Manager/Evaluator: '.$field['review_cycle'].'</p>';
-							$return .= '<p>Review Form: '.$field['reviewform_name'].'</p>';
-						$return .= '</div>';
-						$return .= '<div class="col-md-4 reviewform-info">';
-							$return .= '<p>Current Rate: '.$field['current_rate'].'</p>';
-							$return .= '<p>Date of Hire: '.$field['hire_date'].'</p>';
-							$return .= '<p>Date of Current Position: '.$field['position_date'].'</p>';
-							$return .= '<p>Seniority Date: '.$field['seniority_date'].'</p>';
-						$return .= '</div>';
-					$return .= '</div>';
+					} else {
+						$return .= '<div class="container-fluid clearfix">';
+							$return .= '<div class="col-md-6 reviewform-info">';
+								$return .= '<p>Employee Info: '.$field['target_user'].'</p>';
+								$return .= '<p>Manager: '.$field['manager'].'</p>';
+							$return .= '</div>';
+							$return .= '<div class="col-md-6 reviewform-info">';
+								$return .= '<p>Department: '.$field['department'].'</p>';
+								$return .= '<p>Property: '.$field['property'].'</p>';
+							$return .= '</div>';							
+							/* $return .= '<div class="col-md-6 reviewform-info">';
+								$return .= '<p>Last Review Date: '.$field['last_review_date'].'</p>';
+								$return .= '<p>Review Cycle: '.$field['review_cycle'].'</p>';
+								$return .= '<p>Manager/Evaluator: '.$field['review_cycle'].'</p>';
+								$return .= '<p>Review Form: '.$field['reviewform_name'].'</p>';
+							$return .= '</div>';
+							$return .= '<div class="col-md-4 reviewform-info">';
+								$return .= '<p>Current Rate: '.$field['current_rate'].'</p>';
+								$return .= '<p>Date of Hire: '.$field['hire_date'].'</p>';
+								$return .= '<p>Date of Current Position: '.$field['position_date'].'</p>';
+								$return .= '<p>Seniority Date: '.$field['seniority_date'].'</p>';
+							$return .= '</div>'; */
+						$return .= '</div>';						
+					}
 					break;
 				case 'reviewFormSection':
 					$fullsize = '';

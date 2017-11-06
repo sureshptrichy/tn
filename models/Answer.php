@@ -141,33 +141,23 @@ ADDRECORD;
 	}
 
 	public function addAnswer($propertyId, $divisionId, $departmentId, $reviewcycleId, $compiledformId, $subevaluationId, $fieldId, $userForId, $userById, $answer) {
-		$cycleTable = '';
-		$override = 0;
-		$summary = null;
-		if ($reviewcycleId != '' || $reviewcycleId != NULL){
-			$cycleTable = $reviewcycleId;
-		} else {
-			$cycleTable = $this->cycleName;
-		}
+	}
+	
+	public function addReviewAnswer($answer, $review_id) {
+		$cycleTable = 'reviewcycle_answers';
+
 		$time = time();
 		$sql = <<<UPDATERECORD
 UPDATE `#__{$cycleTable}`
 SET `answer_date` = $time,
 	`answer` = ?
-WHERE `property_id` = '$propertyId'
-	AND `division_id` = '$divisionId'
-	AND `department_id` = '$departmentId'
-	AND `reviewcycle_id` = '$reviewcycleId'
-	AND `compiledform_id` = '$compiledformId'
-	AND `subevaluation_id` = '$subevaluationId'
-	AND `field_id` = '$fieldId'
-	AND `user_for_id` = '$userForId'
-	AND `user_by_id` = '$userById'
+WHERE `aid` = '$review_id'
 LIMIT 1;
 UPDATERECORD;
 		$result = $this->execute($sql, $answer);
 
-		// Check if the answer was numeric, manager-override, or text.
+		
+/*		// Check if the answer was numeric, manager-override, or text.
 		$fieldModel = get_model('field');
 		$field = $fieldModel->getOne($fieldId, 'id');
 		$forUser = get_model('user');
@@ -176,8 +166,7 @@ UPDATERECORD;
 		$byUser->loadUser($userById);
 		$isManager = ($byUser->acl->role['level'] != '20' && ($byUser->acl->role['level'] > $forUser->acl->role['level']));
 		$scoreAvg = null;
-		
-		// GET CUMMULATION		
+ 		// GET CUMMULATION		
 		$subevaluation = get_model('subevaluation')->getOne($subevaluationId, 'id');
 		$cummulation = $subevaluation['cummulation'];
 		if ($field['type'] == 'rating' && is_numeric($answer)) {
@@ -295,7 +284,7 @@ ON DUPLICATE KEY UPDATE
 INSERTSUMMARY;
 $params = array($propertyId, $divisionId, $departmentId, $compiledformId, $subevaluationId, $fieldId, $userForId, $summary, $cummulation, $override, $summary, $cummulation, $override);
 			$this->execute($sql, $params);
-		}
+		} */
 	}
 
 	public function OLD_addAnswer($propertyId, $divisionId, $departmentId, $reviewcycleId, $compiledformId, $subevaluationId, $fieldId, $userForId, $userById, $answer) {
@@ -432,9 +421,10 @@ INSERTSUMMARY;
 		}
 	*/
 	}
-	
+
 	public function getAnswer($propertyId, $divisionId, $departmentId, $reviewcycleId, $compiledformId, $subevaluationId, $fieldId, $userForId, $userById, $discrete = null, $raters = null) {
-		$cycleTable = '';
+
+/* 		$cycleTable = '';
 		$return = array();
 		if ($reviewcycleId != '' || $reviewcycleId != NULL){
 			$cycleTable = $reviewcycleId;
@@ -502,12 +492,28 @@ SELECTSUMMARY;
 			}
 			
 		}
-		return $return;
+		return $return; */
+		
+	}
+	
+	public function getReviewAnswer($review_id) {
+		
+		$cycleTable = '#__reviewcycle_answers';
+		
+		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.compiledform_id AS reviewform_id, b.answer, b.answer_date FROM #__reviewcycle AS a LEFT JOIN #__reviewcycle_answers AS b  ON (a.id = b.reviewcycle_id) WHERE b.aid = " . $review_id;
+		
+		$results = $this->execute($sql);
+		
+		if($results) {
+			return $results[0];
+		}
+		
+
 	}
 	
 	public function getAvg($propertyId, $divisionId, $departmentId, $reviewcycleId, $compiledformId, $subevaluationId, $fieldId, $userForId) {
 		//SELECT `property_id`, `division_id` AVG (summary) as `avg` FROM `tnng_RC_KLdeuBrR4j4SN23a_summary` WHERE 1 GROUP BY `property_id`, `compiledform_id`, `cummulation`
-		$cycleTable = '';
+		/* $cycleTable = '';
 		$return = array();
 		if ($reviewcycleId != '' || $reviewcycleId != NULL){
 			$cycleTable = $reviewcycleId;
@@ -555,6 +561,6 @@ SELECTSUMMARY;
 		foreach ($results as $result){
 			$return[$result['cummulation']] = $result;
 		}
-		return $return;
+		return $return; */
 	}
 }
