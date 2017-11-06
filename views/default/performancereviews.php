@@ -36,7 +36,7 @@
 		<td><?php echo $userForm['review_for']; ?></td>
 		<td><?php echo $userForm['review_name']; ?></td>
 		<td><?php if ($userForm['answer_date'] > 0){?><i class="fa fa-check"></i><?php }?></td>
-		<td><a href="<?php echo $currentUrl; ?>review/<?php echo $userForm['reviewcycle_id'];?>/<?php echo $userForm['compiledform_id'];?>/<?php echo $userForm['review_id'];?>">View</a></td>
+		<td><a href="<?php echo $currentUrl; ?>mgrreview/<?php echo $userForm['review_id'];?>">View</a></td>
 	</tr>
 <?php }?>
 </table>

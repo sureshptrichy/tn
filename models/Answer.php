@@ -142,7 +142,20 @@ ADDRECORD;
 
 	public function addAnswer($propertyId, $divisionId, $departmentId, $reviewcycleId, $compiledformId, $subevaluationId, $fieldId, $userForId, $userById, $answer) {
 	}
-	
+
+	public function addManagerReviewAnswer($answer, $review_id) {
+		$cycleTable = 'reviewcycle_answers';
+
+		$time = time();
+		$sql = <<<UPDATERECORD
+UPDATE `#__{$cycleTable}`
+SET `manager_answer_date` = $time,
+	`manager_answer` = ?
+WHERE `aid` = '$review_id'
+LIMIT 1;
+UPDATERECORD;
+		$result = $this->execute($sql, $answer);
+	}		
 	public function addReviewAnswer($answer, $review_id) {
 		$cycleTable = 'reviewcycle_answers';
 
@@ -500,7 +513,7 @@ SELECTSUMMARY;
 		
 		$cycleTable = '#__reviewcycle_answers';
 		
-		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.compiledform_id AS reviewform_id, b.answer, b.answer_date FROM #__reviewcycle AS a LEFT JOIN #__reviewcycle_answers AS b  ON (a.id = b.reviewcycle_id) WHERE b.aid = " . $review_id;
+		$sql = "SELECT a.name AS review_name, a.due, b.reviewcycle_id, b.aid AS review_id, b.user_for_id, b.user_by_id, b.compiledform_id AS reviewform_id, b.answer, b.manager_answer, b.answer_date FROM #__reviewcycle AS a LEFT JOIN #__reviewcycle_answers AS b  ON (a.id = b.reviewcycle_id) WHERE b.aid = " . $review_id;
 		
 		$results = $this->execute($sql);
 		

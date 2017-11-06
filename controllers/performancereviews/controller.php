@@ -495,7 +495,262 @@ final class Controller_Performancereviews extends Controller {
 		parent::display();
 	}
 
+	public function config_mgrreview($params = NULL) {
+		$this->route['view'] = $this->route['view'].'_view';
+		$this->permission[] = 'viewCompiledform';
+	}
 
+
+	public function call_mgrreview ($params){
+
+		$preload = array();
+		$property = array();
+		$division = array();
+		$department = array();
+		$ratings = array();
+		$matrix = array();
+		$averages = array();
+		$peerAnswers = array();
+		$resultAvg = 0;
+		$cultureAvg = 0;
+		$managerClearance = null;
+		$arbirtary = null;
+		//$reviewCycle = get_model('Reviewcycle')->current();
+		//$reviewCycle = array_shift($params);
+	
+	
+		// CHECK IF MANAGER OR HIGHER
+		$myself = get_model('user');
+		$myself->loaduser(session('user'));
+		if ($myself->acl->role['level'] != '20' && ($myself->acl->role['level'] >= DEPARTMENT_MANAGER)){
+			$managerClearance = true;
+		}
+		
+		//print_r($params);exit;
+		
+		// 
+		$reviewForm = get_model('answer')->getReviewAnswer($params[0], 'id');
+		
+		$sectionAnswers = array();
+		if($reviewForm["answer"]) {
+			$selfAnswers = json_decode($reviewForm["answer"], true);
+			$sectionAnswers = $selfAnswers["sections"];
+		}
+
+		if($reviewForm["answer"]) {
+			$managerAnswers = json_decode($reviewForm["manager_answer"], true);
+			$managerAnswers = $managerAnswers["sections"];
+		}
+		
+		// COMPILED FORM
+		$preload = get_model('Compiledform')->getOne($reviewForm['reviewform_id'], 'id');
+		$formtype = 'Review';
+		$subevaluations = get_model('Compiledform')->sections($reviewForm['reviewform_id']);
+		
+		// CHECK USER
+		$userId = session('user_filter');
+		if ($userId == '' || $userId == null || $userId == 'all'){
+			$userId = session('user');
+		}
+		
+		// SUB EVALUATION
+		foreach ($subevaluations as $subevaluation){
+			$subevaluationModel = get_model('subevaluation');
+			$loadSubEval = true;
+			$donotsave = null;
+			$allowOverride = null;
+			$rateable = true;
+			$discrete = true;
+			
+			// LOAD SUB EVALUATION
+			if ($loadSubEval != null){
+				//$preload['sections'][$subevaluation['id']] = $subevaluation;
+				
+				// LOAD FIELDS
+				$subevaluation['fields'] = $subevaluationModel->fields($subevaluation['id']);
+				foreach ($subevaluation['fields'] as $field){
+					
+					$subevaluation['fields'][$field['id']]['value'] = '';
+					if ($rateable != null) {
+						$subevaluation['fields'][$field['id']]['rateable'] = true;
+					}
+					
+					if(array_key_exists($subevaluation['id'], $sectionAnswers)) {
+						$section_id = $subevaluation['id'];
+						$field_id = $field['id'];
+						$sectionAnswer = $sectionAnswers[$subevaluation['id']]['fields'];
+						$managerAnswer = $managerAnswers[$subevaluation['id']]['fields'];
+						if(array_key_exists($field_id, $sectionAnswer)) {
+							$subevaluation['fields'][$field['id']]['answer'] = $sectionAnswer[$field['id']];
+						}
+						if(array_key_exists($field_id, $managerAnswer)) {
+							$subevaluation['fields'][$field['id']]['value'] = $managerAnswer[$field['id']];
+						}
+					}
+					
+					/*
+					// LOAD MATRIX DATA
+					if($subevaluation['name'] == 'Results/Culture Matrix') {
+						$answers = $answerModel->getAnswer($property['id'], $division['id'], $department['id'], $reviewCycle, $params[0], $subevaluation['id'], $field['id'], $params[1], NULL, NULL, TRUE);
+					}
+					*/
+				}
+				
+				
+				$preload['sections'][$subevaluation['id']] = $subevaluation;
+			}			
+			
+			// MATRIX SUB EVALUATION
+			if($subevaluation['name'] == 'Results/Culture Matrix') {
+				//pr("THE MATRIX HAS YOU...");
+				$preload['sections'][$subevaluation['id']] = $subevaluation;	
+				$preload['sections'][$subevaluation['id']]['fields'] = array();
+			}
+		}
+		//pr($preload['sections']);
+		// RETRIEVE POSTED DATA AND ADD TO PRELOAD
+		if ($this->G->url->getPostBit('tnngtoken') != null){
+			$posted = $this->G->url->getPost();
+			foreach ($preload['sections'] as $psection){
+				if (array_key_exists('sections', $posted)){
+					if (array_key_exists($psection['id'], $posted['sections'])){
+						foreach ($psection['fields'] as $field){
+							foreach($posted['sections'] as $section){
+								if (array_key_exists($field['id'], $section['fields'])){
+									$preload['sections'][$psection['id']]['fields'][$field['id']]['value'] = $section['fields'][$field['id']];
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		
+		$preload['results_avg'] = $resultAvg;
+		$preload['culture_avg'] = $cultureAvg;
+		
+		$model = get_model('user');
+		$loadManager = $model->loadUser($reviewForm["user_for_id"]);
+		$manager = $loadManager['firstname'].' '.$loadManager['lastname'];
+		
+		$targetUserModel = get_model('user');
+		//echo $reviewForm["user_for_id"];exit;
+		$targetUser = $targetUserModel->loadUser($reviewForm["user_for_id"]);
+
+		$targetUserName = $targetUser['firstname'].' '.$targetUser['lastname'];
+		
+		if (empty($targetUser->property)) {
+			$targetUserProperty['all']['id'] = session('property');
+			$targetUserProperty['all']['name'] = 'All Properties';
+		} else {
+			$targetUserProperty = $targetUser->property;
+		}
+		if (empty($targetUser->division)) {
+			$targetUserDivision['all']['id'] = session('division');
+			$targetUserDivision['all']['name'] = 'All Divisions';
+		} else {
+			$targetUserDivision = $targetUser->division;
+		}
+		if (empty($targetUser->department)) {
+			$targetUserDepartment['all']['id'] = session('department');
+			$targetUserDepartment['all']['name'] = 'All Departments';
+		} else {
+			$targetUserDepartment = $targetUser->department;
+		}
+		foreach($targetUserProperty as $item => $value){
+			$property['id'] = $value['id'];
+			$property['name'] = $value['name'];
+		}
+		foreach($targetUserDivision as $item => $value){
+			$division['id'] = $value['id'];
+			$division['name'] = $value['name'];
+		}
+		foreach($targetUserDepartment as $item => $value){
+			$department['id'] = $value['id'];
+			$department['name'] = $value['name'];
+		}		
+		
+		$targetUserData['target_user']['id'] = $reviewForm["user_for_id"];		
+		$targetUserData['target_user']['reviewcycle_id'] = $reviewForm["review_name"];
+		$targetUserData['target_user']['name'] = $targetUserName;				
+		$targetUserData['target_user']['manager'] = $manager;			
+		$targetUserData['target_user']['manager_id'] = $myself->supervisor;		
+		$targetUserData['target_user']['property'] = $property;
+		$targetUserData['target_user']['division'] = $division;
+		$targetUserData['target_user']['department'] = $department;	
+		
+		
+		// Compile Form
+		$form = $this->compile_form('review', array_merge($preload, $targetUserData));
+		if (FALSE === $form->valid()) {
+			tpl_set('form', $form);
+		} else {
+			tpl_set('form', $form);
+			$form = $form->valid();
+			$failed = null;
+			$anwsers = array();
+			
+			foreach ($preload['sections'] as $section){
+				if(array_key_exists('sections', $form)){
+					if (array_key_exists($section['id'], $form['sections'])){
+						if (array_key_exists('fields', $section)){
+							foreach ($section['fields'] as $field){
+								foreach ($form['sections'] as $formSection => $sectionId){
+									//pr($formSection);
+									if ($section['id'] == $formSection) {
+										if (array_key_exists($field['id'], $sectionId['fields'])){
+											foreach ($sectionId as $key){
+												$answers[$formSection] = $sectionId;
+											}
+										} else {
+											//$failed = true;
+										}
+									}
+								}
+							}
+						}
+					}
+				} else {
+					//$failed = true;
+				}
+			}
+
+//print_r($answers);		
+			
+			foreach ($preload['sections'] as $section){
+				foreach ($section['fields'] as $field){
+					if (!empty($answers)) {
+						if (array_key_exists($field['id'], $answers)){
+						pr($field['id']);
+							pr($field['id'].' '.$answers[$field['id']]);
+							if ($answers[$field['id']] == '' || $answers[$field['id']] == null){
+								pr($answers[$field['id']].' = '.$answers[$field['id']]);
+								pr("FAILED");
+								$failed = true;
+							}
+						} 
+					} else {
+						$failed = true;	
+					}
+				}
+			}				
+			
+			
+			if ($failed == null && !empty($answers)){
+				$answers = json_encode($form);
+				get_model('answer')->addManagerReviewAnswer($answers, $params[0]);
+				
+				flash(_('You have successfully reviewed the Leadership Review Form.'), 'success');
+				locate('/'.$this->G->url->parentUrl(2));
+			} else {
+				flash(_('Incomplete review. Please answer all questions.'), 'danger');
+			}
+			//locate('/'.$this->G->url->parentUrl(2));
+		}
+		parent::display();
+	}
+	
 	public function config_review($params = NULL) {
 		$this->route['view'] = $this->route['view'].'_view';
 		$this->permission[] = 'viewCompiledform';
