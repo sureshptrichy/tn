@@ -110,7 +110,7 @@ final class Model_Reviewcycle extends Model {
 				CONCAT(c.firstname, ' ', c.lastname) AS review_for 
 				FROM #__Reviewcycle AS a 
 				LEFT JOIN #__Reviewcycle_Answers AS b  ON (a.id = b.reviewcycle_id)
-				LEFT JOIN #__user AS c ON (b.user_for_id = c.id)
+				LEFT JOIN #__User AS c ON (b.user_for_id = c.id)
 				WHERE b.user_by_id = '$userId'  AND b.answer_date > 0 GROUP BY a.id ORDER BY a.start DESC";
 		
 		$results = $this->execute($sql);
